@@ -1,11 +1,14 @@
 {
   "dependencies": {
+    "-": "^0.0.1",
     "escodegen": "^2.0.0",
     "esprima": "^4.0.1",
     "estraverse": "^5.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.21.0",
+    "@babel/helper-module-imports": "^7.18.6",
+    "@babel/template": "^7.20.7",
     "@babel/types": "^7.21.2",
     "babel-plugin-transform-es2015-arrow-functions": "^6.22.0"
   }
