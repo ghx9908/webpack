@@ -1,2 +1,2 @@
-import title from "./xx.baxx"
+import title from "./title"
 console.log("title=>", title)
