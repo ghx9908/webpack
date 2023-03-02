@@ -1,5 +1,7 @@
 const path = require("path")
-
+// const Run1Plugin = require("./plugins/run1-plugin")
+// const Run2Plugin = require("./plugins/run2-plugin")
+// const DonePlugin = require("./plugins/done-plugin")
 module.exports = {
   mode: "development",
   devtool: false,
@@ -21,4 +23,5 @@ module.exports = {
       },
     ],
   },
+  // pulgins: [new Run1Plugin(), new Run2Plugin(), new DonePlugin()],
 }
