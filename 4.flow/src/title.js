@@ -1,2 +1,2 @@
-const msg = require("./msg")
-module.exports = "title" + msg
+let age = require("./age")
+module.exports = "title" + age

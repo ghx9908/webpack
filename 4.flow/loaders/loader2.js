@@ -4,6 +4,6 @@
  *
  */
 function loader2(input) {
-  return `module.exports = "${input}123"`
+  return input
 }
 module.exports = loader2

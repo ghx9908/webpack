@@ -6,16 +6,20 @@ module.exports = {
   mode: "development",
   devtool: false,
   entry: {
-    main: "./src/index.js",
+    entry1: "./src/entry1.js",
+    entry2: "./src/entry2.js",
   },
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "[name].js",
   },
+  resolve: {
+    extensions: [".js", ".jsx", ".tx", ".tsx"],
+  },
   module: {
     rules: [
       {
-        test: /\.baxx$/,
+        test: /\.js$/,
         use: [
           path.resolve(__dirname, "loaders/loader2.js"),
           path.resolve(__dirname, "loaders/loader1.js"),
