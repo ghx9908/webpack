@@ -1,26 +1,13 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/msg.js":
-/*!********************!*\
-  !*** ./src/msg.js ***!
-  \********************/
+/***/ "./src/xx.baxx":
+/*!*********************!*\
+  !*** ./src/xx.baxx ***!
+  \*********************/
 /***/ ((module) => {
 
-module.exports = "msg"
-
-
-/***/ }),
-
-/***/ "./src/title.js":
-/*!**********************!*\
-  !*** ./src/title.js ***!
-  \**********************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-const msg = __webpack_require__(/*! ./msg */ "./src/msg.js")
-module.exports = "title" + msg
-
+module.exports = "baxx123"
 
 /***/ })
 
@@ -100,10 +87,10 @@ var __webpack_exports__ = {};
   !*** ./src/index.js ***!
   \**********************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _title__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./title */ "./src/title.js");
-/* harmony import */ var _title__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_title__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _xx_baxx__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./xx.baxx */ "./src/xx.baxx");
+/* harmony import */ var _xx_baxx__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_xx_baxx__WEBPACK_IMPORTED_MODULE_0__);
 
-console.log("title=>", (_title__WEBPACK_IMPORTED_MODULE_0___default()))
+console.log("title=>", (_xx_baxx__WEBPACK_IMPORTED_MODULE_0___default()))
 
 })();
 
