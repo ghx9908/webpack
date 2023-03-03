@@ -31,18 +31,17 @@ class Compilation {
       this.fileDependencies.add(entryFilePath)
       //6.从入口文件出发,调用所有配置的Loader对模块进行编译
       let entryModule = this.buildModule(entryName, entryFilePath)
-      this.modules.push(entryModule)
-      // // 8.根据入口和模块之间的依赖关系，组装成一个个包含多个模块的 Chunk
-      // let chunk = {
-      //   name: entryName,
-      //   entryModule,
-      //   modules: this.modules.filter((module) =>
-      //     module.names.includes(entryName)
-      //   ),
-      // }
-      // this.chunks.push(chunk)
+      // this.modules.push(entryModule)
+      // 8.根据入口和模块之间的依赖关系，组装成一个个包含多个模块的 Chunk
+      let chunk = {
+        name: entryName,
+        entryModule,
+        modules: this.modules.filter((module) =>
+          module.names.includes(entryName)
+        ),
+      }
+      this.chunks.push(chunk)
     }
-    console.dir(this.modules, null, 2)
 
     // 9.再把每个 Chunk 转换成一个单独的文件加入到输出列表
     this.chunks.forEach((chunk) => {
