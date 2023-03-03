@@ -1,8 +1,8 @@
-const webpack = require("webpack")
+const webpack = require("./webpack2")
 const webpackConfig = require("./webpack.config")
 debugger
 const compiler = webpack(webpackConfig)
-//执行`Compiler`对象的 run 方法开始执行编译
+//4.执行`Compiler`对象的 run 方法开始执行编译
 compiler.run((err, stats) => {
   if (err) {
     console.log(err)
