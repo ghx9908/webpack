@@ -7,7 +7,7 @@ const isProduction = NODE_ENV === "production"
 module.exports = {
   mode: "development",
   devtool: false,
-  entry: "./src/index.js",
+  entry: "./src/index.ts",
   // entry: ["./src/entry1.js", "./src/entry2.js"],
 
   // entry: {
@@ -33,8 +33,24 @@ module.exports = {
     //不管访问哪个路径，都会把请求重定向到index.html，交给前端路由来进行处理
     historyApiFallback: true,
   },
+  resolve: {
+    extensions: [".ts", ".js"],
+  },
   module: {
     rules: [
+      {
+        test: /\.ts$/,
+        // use: "ts-loader",
+        use: [
+          {
+            loader: "babel-loader",
+            options: {
+              presets: ["@babel/preset-typescript"],
+            },
+          },
+        ],
+        exclude: /node_modules/,
+      },
       {
         test: /\.js$/,
         use: [
