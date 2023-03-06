@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require("path")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const ESLintPlugin = require("eslint-webpack-plugin")
 //获取环境变量
 const NODE_ENV = process.env.NODE_ENV
 const isProduction = NODE_ENV === "production"
@@ -95,6 +97,7 @@ module.exports = {
       filename: "index.html",
     }),
     new MiniCssExtractPlugin(),
+    new ESLintPlugin({ extensions: [".js", ".ts"] }),
     // new HtmlWebpackPlugin({
     //   template: "./src/entry1.html",
     //   filename: "entry1.html",
