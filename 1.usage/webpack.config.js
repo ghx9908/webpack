@@ -9,7 +9,7 @@ const isProduction = NODE_ENV === "production"
 module.exports = {
   mode: "development",
   devtool: false,
-  entry: "./src/index.ts",
+  entry: "./src/index.js",
   // entry: ["./src/entry1.js", "./src/entry2.js"],
 
   // entry: {
@@ -40,6 +40,28 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.txt$/,
+        type: "asset/source",
+      },
+      // {
+      //   test: /\.png$/,
+      //   type: "asset/inline",
+      // },
+      {
+        test: /\.(jpg)$/,
+        type: "asset/inline",
+      },
+      {
+        test: /\.(png)$/,
+        //如果图片大小小于某个阈值，则base64,大于某个阈值输出单独文件
+        type: "asset",
+        parser: {
+          dataUrlCondition: {
+            maxSize: 1024 * 32,
+          },
+        },
+      },
       {
         test: /\.ts$/,
         // use: "ts-loader",

@@ -1,2 +1,3 @@
-let sum = (a, b) => a + b
-console.log(sum(1, 2))
+import title from "./title.txt"
+
+console.log("title=>", title)
