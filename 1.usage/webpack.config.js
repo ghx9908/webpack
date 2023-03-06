@@ -36,6 +36,23 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.js$/,
+        use: [
+          {
+            loader: "babel-loader",
+            //第一种写法
+            // options: {
+            //   presets: [
+            //     "@babel/preset-env", //V50套餐
+            //   ],
+            //   plugins: [
+            //     //装饰器的插件就需要单独在这里配置
+            //   ],
+            // },
+          },
+        ],
+      },
+      {
         test: /\.css$/,
         use: [
           isProduction ? MiniCssExtractPlugin.loader : "style-loader",

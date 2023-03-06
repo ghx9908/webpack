@@ -1,0 +1,4 @@
+//第二种写法
+{
+  "presets": ["@babel/preset-env"]
+}
