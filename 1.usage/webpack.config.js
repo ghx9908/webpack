@@ -1,5 +1,9 @@
 const path = require("path")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+//获取环境变量
+const NODE_ENV = process.env.NODE_ENV
+const isProduction = NODE_ENV === "production"
 module.exports = {
   mode: "development",
   devtool: false,
@@ -30,13 +34,22 @@ module.exports = {
     historyApiFallback: true,
   },
   module: {
-    rules: [{ test: /\.css$/, use: ["style-loader", "css-loader"] }],
+    rules: [
+      {
+        test: /\.css$/,
+        use: [
+          isProduction ? MiniCssExtractPlugin.loader : "style-loader",
+          "css-loader",
+        ],
+      },
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: "./src/index.html",
       filename: "index.html",
     }),
+    new MiniCssExtractPlugin(),
     // new HtmlWebpackPlugin({
     //   template: "./src/entry1.html",
     //   filename: "entry1.html",

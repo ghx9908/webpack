@@ -4,8 +4,8 @@
   "description": "",
   "main": "webpack.config.js",
   "scripts": {
-    "build": "webpack",
-    "dev": "webpack serve"
+    "build": "cross-env NODE_ENV=production  webpack",
+    "dev": "cross-env NODE_ENV=development  webpack serve"
   },
   "author": "",
   "license": "ISC",
