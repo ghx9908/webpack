@@ -40,6 +40,7 @@ module.exports = {
         use: [
           isProduction ? MiniCssExtractPlugin.loader : "style-loader",
           "css-loader",
+          "postcss-loader",
         ],
       },
       {
@@ -49,6 +50,7 @@ module.exports = {
             ? "style-loader"
             : MiniCssExtractPlugin.loader,
           "css-loader",
+          "postcss-loader",
           "less-loader",
         ],
       },
