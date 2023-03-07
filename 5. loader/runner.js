@@ -17,7 +17,7 @@ const entryFile = path.resolve(__dirname, "src/index.js")
 //因为我们的loader配置可以是由多个配置文件合并而来
 //为了保证执行的时候按我们希望的顺序执行，所以我们可以给loader分类
 
-let request = `!inline-loader1!inline-loader2!${entryFile}`
+let request = `inline-loader1!inline-loader2!${entryFile}`
 
 const rules = [
   {
@@ -85,10 +85,7 @@ runLoaders(
     console.log(err)
     console.log(result.result[0].toString()) //转换后的结果
     //转换前源文件的内容
-    console.log("1", result.resourceBuffer)
-    console.log(
-      "2",
-      result.resourceBuffer ? result.resourceBuffer.toString() : null
-    )
+    console.log(result.resourceBuffer)
+    console.log(result.resourceBuffer ? result.resourceBuffer.toString() : null)
   }
 )
