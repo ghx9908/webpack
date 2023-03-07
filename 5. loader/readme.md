@@ -6,3 +6,17 @@
 #### 1.2.1 loader 类型
 
 - [loader 的叠加顺序](https://github.com/webpack/webpack/blob/v4.39.3/lib/NormalModuleFactory.js#L159-L339) = post(后置)+inline(内联)+normal(正常)+pre(前置)
+
+
+
+#### 1.3 特殊配置 
+
+```js
+/**
+ * Auto=Normal  
+ * !  noAuto 不要普通 loader
+ * -! noPreAuto 不要前置和普通 loader
+ * !! noPrePostAuto 不要前后置和普通 loader,只要内联 loader
+ */
+```
+

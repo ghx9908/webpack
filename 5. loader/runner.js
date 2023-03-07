@@ -17,7 +17,7 @@ const entryFile = path.resolve(__dirname, "src/index.js")
 //因为我们的loader配置可以是由多个配置文件合并而来
 //为了保证执行的时候按我们希望的顺序执行，所以我们可以给loader分类
 
-let request = `inline-loader1!inline-loader2!${entryFile}`
+let request = `!inline-loader1!inline-loader2!${entryFile}`
 
 const rules = [
   {
@@ -35,8 +35,8 @@ const rules = [
     use: ["post-loader1", "post-loader2"],
   },
 ]
-const parts = request.split("!")
-// const parts = request.replace(/^-?!+/, "").split("!")
+// const parts = request.split("!")
+const parts = request.replace(/^-?!+/, "").split("!")
 let resource = parts.pop() //取出最后一个元素，也就是要加载的文件或者说模块
 let inlineLoaders = parts
 let preLoaders = [],
@@ -55,7 +55,19 @@ for (let i = 0; i < rules.length; i++) {
   }
 }
 let loaders = []
-loaders = [...postLoaders, ...inlineLoaders, ...normalLoaders, ...preLoaders]
+if (request.startsWith("!!")) {
+  // 不要前后置和普通 loader,只要内联 loader
+  loaders = inlineLoaders
+} else if (request.startsWith("-!")) {
+  //不要前置和普通 loader
+  loaders = [...postLoaders, ...inlineLoaders]
+} else if (request.startsWith("!")) {
+  //不要普通 loader
+  loaders = [...postLoaders, ...inlineLoaders, ...preLoaders]
+} else {
+  loaders = [...postLoaders, ...inlineLoaders, ...normalLoaders, ...preLoaders]
+}
+
 //把loader从一个名称变成一个绝地路径
 loaders = loaders.map((loader) =>
   path.resolve(__dirname, "loader-chain", loader)
