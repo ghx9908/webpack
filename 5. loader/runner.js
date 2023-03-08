@@ -4,7 +4,7 @@
  * =post(后置)+inline(内联)+normal(正常)+pre(前置)
  * = 厚脸挣钱
  */
-const { runLoaders } = require("loader-runner")
+const { runLoaders } = require("./loader-runner")
 const path = require("path")
 const fs = require("fs")
 
