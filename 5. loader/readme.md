@@ -26,3 +26,11 @@
 - 比如如果 b 返回了字符串"result b", 接下来只有 a 会被系统执行，且 a 的 loader 收到的参数是 result b
 
 ![](https://raw.githubusercontent.com/ghx9908/image-hosting/master/img/20230307173454.png)
+
+### 1.5 配置自定义 loader 有以下几种方式
+
+1. 配置绝对路径
+
+2. 配置 resolveLoader 中的 alias
+
+3. 如果说 loader 很多，用 alias 一个一个配很麻烦，resolveLoader.modules 指定一个目录，找 loader 的时候会先去此目录下面找
