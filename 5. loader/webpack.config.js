@@ -22,10 +22,10 @@ module.exports = {
   },
   module: {
     rules: [
-      // {
-      //   test: /\.less$/,
-      //   use: ["style-loader", "less-loader"],
-      // },
+      {
+        test: /\.less$/,
+        use: ["style-loader", "less-loader"],
+      },
       {
         test: /\.js$/,
         exclude: /node_modules/,
