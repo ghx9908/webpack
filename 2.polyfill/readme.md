@@ -1,0 +1,3 @@
+- babel-polyfill
+  - 它是通过向全局对象和内置对象的 `prototype `上添加方法来实现的。比如运行环境中不支持 `Array.prototype.find` 方法，引入` polyfill`, 我们就可以使用 ES6 方法来编写了，但是
+  - 缺点就是会造成全局空间污染
