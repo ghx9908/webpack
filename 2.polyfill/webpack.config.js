@@ -18,13 +18,14 @@ module.exports = {
             loader: "babel-loader",
             options: {
               targets: {
-                browsers: [">0.1%"],
+                browsers: [">1%"],
               },
               presets: [
                 [
                   "@babel/preset-env",
                   {
-                    useBuiltIns: false,
+                    useBuiltIns: "entry",
+                    corejs: 3,
                   },
                 ],
               ],
