@@ -2,6 +2,8 @@
  * @type {import('webpack').Configuration}
  */
 const HtmlWebpackPlugin = require("html-webpack-plugin")
+const PreloadWebpackPlugin = require("@vue/preload-webpack-plugin")
+
 module.exports = {
   mode: "development",
   devtool: false,
@@ -17,5 +19,6 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: "./src/index.html",
     }),
+    new PreloadWebpackPlugin(),
   ],
 }
