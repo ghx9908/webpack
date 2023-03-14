@@ -21,17 +21,34 @@
 
 ### 1.2 配置项
 
+```js
+ cosnt devtool =	\^(inline-|hidden-|eval-)?(nosources-)?(cheap-(module-)?)?source-map$\
+```
+
+
+
 - 配置项其实只是五个关键字eval、source-map、cheap、module和inline的组合
 
-| sourcemap 类型 | 描述                                            |
-| :------------- | :---------------------------------------------- |
-| `source-map`   | 生成 .map 文件                                  |
-| `eval`         | 使用 eval 包裹模块代码                          |
-| `cheap`        | 不包含列信息，也不包含 loader 的 sourcemap      |
-| `module`       | 包含 loader 的 sourcemap，否则无法定义源文件    |
-| `inline`       | 将 .map 作为 DataURI 嵌入，不单独生成 .map 文件 |
+| sourcemap 类型 | 描述                                                         |
+| :------------- | :----------------------------------------------------------- |
+| `source-map`   | 生成 .map 文件  **最高的质量和最低的性能**                   |
+| `eval`         | 使用 eval 包裹模块代码，**有缓存**                           |
+| `cheap`        | 不包含列信息，也不包含 loader 的 sourcemap **(低开销)**      |
+| `module`       | 包含 loader 的 sourcemap，否则无法定义源文件  **映射到loader处理前的代码** |
+| `inline`       | 将 .map **作为 DataURI 嵌入**，不单独生成 .map 文件          |
 
-#### 1.2.1 source-map
+### 1.3 最佳实践
 
+#### 1.3.1 开发环境
 
+- 我们在开发环境对sourceMap的要求是：快（eval），信息全（module），
+- 且由于此时代码未压缩，我们并不那么在意代码列信息(cheap),
+- 所以开发环境比较**推荐配置**：`devtool: eval-cheap-module-source-map`
+
+#### 1.3.2 生产环境
+
+- 一般情况下，我们并不希望任何人都可以在浏览器直接看到我们未编译的源码，
+- 所以我们不应该直接提供sourceMap给浏览器。但我们又需要sourceMap来定位我们的错误信息，
+- 这时我们可以设置`hidden-source-map`
+- 一方面webpack会生成sourcemap文件以提供给错误收集工具比如sentry，另一方面又不会为 bundle 添加引用注释，以避免浏览器使用。
 
