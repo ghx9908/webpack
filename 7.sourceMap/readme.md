@@ -108,7 +108,8 @@ module.exports = {
           copy: [
             {
               source: "./dist/*.map",
-              destination: "D:/aprepare/webpacksource/sourcemap",
+              destination: false,
+              // destination: "D:/aprepare/webpacksource/sourcemap",
             },
           ],
           delete: ["./dist/*.map"],
@@ -130,3 +131,25 @@ module.exports = {
 ```bash
 http-server -c -1 -p 8081
 ```
+
+
+
+### 2.2 生产环境调试
+
+- 打开混淆代码
+- 右键 -> 选择[Add source map]
+- 输入本地 `sourceMap` 的地址（此处需要启用一个静态资源服务，可以使用 `http-server` 或者通过浏览器打开对应混淆代码的`.map`文件 ），完成。本地代码执行构建命令，注意需要打开 `sourceMap` 配置，编译产生出构建后的代码，此时构建后的结果会包含 `sourceMap` 文件。关联上 `sourceMap` 后，我们就可以看到 `sources -> page` 面板上的变化了
+
+
+
+## **请说说sourcemap原理**
+
+
+
+其工作原理是在编译后的代码中嵌入一个映射文件，其中包含了源代码的位置信息。当开发者在浏览器中进行调试时，调试工具可以使用 SourceMap 文件将编译后的代码映射回原始源代码。
+
+具体来说，SourceMap 文件中包含了一些映射条目，每个条目表示编译后的代码的一行、一列和一个源文件的位置信息。这个源文件可以是原始源代码，也可以是另一个编译后的文件，如果是后者，SourceMap 文件将会嵌套引用其他 SourceMap 文件以完成映射。
+
+当开发者在浏览器中调试代码时，调试工具可以解析这些映射条目，根据 SourceMap 文件将编译后的代码映射回原始源代码。这使得开发者可以在浏览器中进行调试，并可以查看原始源代码的位置、断点和调用栈信息。
+
+总之，SourceMap 文件提供了一个可靠的机制，使得开发者可以更轻松地进行调试和错误排查，从而提高了开发效率和代码质量。

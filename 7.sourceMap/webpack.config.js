@@ -9,7 +9,7 @@ const path = require("path")
 const webpack = require("webpack")
 module.exports = {
   mode: "development",
-  devtool: false,
+  devtool: "hidden-source-map",
   output: {
     clean: true,
   },
@@ -33,15 +33,15 @@ module.exports = {
       template: "./src/index.html",
       filename: "index.html",
     }),
-    //自己生成sourcemmap 内置插件
-    new webpack.SourceMapDevToolPlugin({
-      append: "\n//# sourceMappingURL=http://127.0.0.1:8081/[url]", // 增加的位置
-      filename: "[file].map[query]",
-    }),
+    // 自己生成sourcemmap 内置插件
+    // new webpack.SourceMapDevToolPlugin({
+    // append: "\n//# sourceMappingURL=http://127.0.0.1:8081/[url]", // 增加的位置
+    //   filename: "[file].map[query]",
+    // }),
     new FileManagerWebpackPlugin({
       events: {
         onStart: {
-          delete: [path.resolve("./sourcemaps/")],
+          delete: [path.resolve("./sourcemaps")],
         },
         onEnd: {
           copy: [
