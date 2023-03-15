@@ -1,2 +1,3 @@
-let title = require("./title.js")
-console.log(title)
+let title = require("./title")
+console.log(title.name)
+console.log(title.age)

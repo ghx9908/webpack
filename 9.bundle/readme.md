@@ -29,7 +29,7 @@ console.log(title);
 src\title.js
 
 ```js
-module.exports = "title";
+module.exports = "title"
 ```
 
 bundle.js
@@ -56,7 +56,58 @@ function require(moduleId) {
 var exports = {}
 let title = require("./src/title.js")
 console.log(title)
-
 ```
 
 ## 2. 兼容性实现
+
+### 2.1 common.js 加载 common.js
+
+#### 2.1.1 index.js
+
+```js
+let title = require("./title")
+console.log(title.name)
+console.log(title.age)
+```
+
+#### 2.1.2 title.js
+
+```js
+exports.name = "title_name"
+exports.age = "title_age"
+```
+
+#### 2.1.3 bundle.js
+
+```js
+;(() => {
+  //需要加载的模块
+  var modules = {
+    "./src/title.js": (module, exports) => {
+      exports.name = "title_name"
+      exports.age = "title_age"
+    },
+  }
+  //缓存
+  var cache = {}
+  //require 方法
+  function require(moduleId) {
+    var cachedModule = cache[moduleId]
+    if (cachedModule !== undefined) {
+      return cachedModule.exports
+    }
+    var module = (cache[moduleId] = {
+      exports: {},
+    })
+    modules[moduleId](module, module.exports, require)
+    return module.exports
+  }
+  // 入口
+  var exports = {}
+  ;(() => {
+    let title = require("./src/title.js")
+    console.log(title.name)
+    console.log(title.age)
+  })()
+})()
+```
