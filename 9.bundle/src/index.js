@@ -1,3 +1,3 @@
 let title = require("./title")
-console.log(title.name)
+console.log(title)
 console.log(title.age)
