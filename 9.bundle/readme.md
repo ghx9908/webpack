@@ -440,8 +440,11 @@ export default "title"
 main.js
 
 ```js
+//定义一个模块定义的对象
 var modules = {}
+//存放已经加载的模块的缓存
 var cache = {}
+//在浏览器里实现require方法
 function require(moduleId) {
   var cachedModule = cache[moduleId]
   if (cachedModule !== undefined) {
@@ -453,6 +456,7 @@ function require(moduleId) {
   modules[moduleId](module, module.exports, require)
   return module.exports
 }
+//给require方法定义一个m属性，指向模块定义对象
 require.m = modules
 require.d = (exports, definition) => {
   for (var key in definition) {
@@ -475,7 +479,9 @@ require.e = (chunkId) => {
   require.f.j(chunkId, promises)
   return Promise.all(promises)
 }
-
+//源代码加载绝对路径 此处写成''
+require.p = ""
+//返回此代码块对应的文件名
 require.u = (chunkId) => {
   return "" + chunkId + ".main.js"
 }
@@ -505,24 +511,22 @@ require.r = (exports) => {
   })
 }
 
-//源代码加载绝对路径 此处写成''
-require.p = ""
-
-//已经安装过的，或者说已经加载好的代码块
-//key是代码块的名字，值是代码块的状态
-//main就是默认代码块的名称 0表示已经加载完成
+//存放加载的代码块的状态
+//key是代码块的名字
+//0表示已经加载完成了
 var installedChunks = {
   main: 0,
   //当一个代码块它的值是一个数组的时候表示此代码块对应的JS文件正在加载中
   //'src_hello_js':[resolve,reject,promise]=>0
 }
 /**
- *sonp 通过JSONP的方式加载chunkId对应的JS文件，生成一个promise放到promises数组里
- * @param {*} chunkId
- * @param {*} promises
+ * 通过JSONP异步加载一个chunkId对应的代码块文件，其实就是hello.main.js
+ * 会返回一个Promise
+ * @param {*} chunkId 代码块ID
+ * @param {*} promises promise数组
  */
 require.f.j = (chunkId, promises) => {
-  //做缓存
+  //做缓存  当前的代码块的数据
   var installedChunkData = require.o(installedChunks, chunkId) ? installedChunks[chunkId] : undefined
   if (installedChunkData !== 0) {
     const promise = new Promise((resolve, reject) => {
@@ -537,8 +541,8 @@ require.f.j = (chunkId, promises) => {
 }
 /**
  *
- * @param {*} chunkIds ["src_title_js"],
- * @param {*} moreModules Modules 对象
+ * @param {*} chunkIds 代码块ID数组
+ * @param {*} moreModules 额外的模块定义
  */
 function webpackJsonpCallback([chunkIds, moreModules]) {
   const resolves = []
@@ -549,6 +553,7 @@ function webpackJsonpCallback([chunkIds, moreModules]) {
     //到这里此代码块就已经加载成功了，可以把chunkId的值设置为0
     installedChunks[chunkId] = 0
   }
+  //合并模块定义到modules去
   for (const moduleId in moreModules) {
     modules[moduleId] = moreModules[moduleId]
   }
@@ -560,7 +565,11 @@ function webpackJsonpCallback([chunkIds, moreModules]) {
 const chunkLoadingGlobal = (window["someName"] = [])
 chunkLoadingGlobal.push = webpackJsonpCallback
 var exports = {}
-debugger
+/**
+ * require.e异步加载hello代码块文件 hello.main.js
+ * promise成功后会把 hello.main.js里面的代码定义合并到require.m对象上，也就是modules上
+ * 调用require方法加载./src/hello.js模块，获取 模块的导出对象，进行打印
+ */
 require
   .e("src_title_js")
   .then(require.bind(require, "./src/title.js"))
