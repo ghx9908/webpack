@@ -520,7 +520,7 @@ var installedChunks = {
   //'src_hello_js':[resolve,reject,promise]=>0
 }
 /**
- * 通过JSONP异步加载一个chunkId对应的代码块文件，其实就是hello.main.js
+ * 通过JSONP异步加载一个chunkId对应的代码块文件，其实就是title.main.js
  * 会返回一个Promise
  * @param {*} chunkId 代码块ID
  * @param {*} promises promise数组
@@ -566,9 +566,9 @@ const chunkLoadingGlobal = (window["someName"] = [])
 chunkLoadingGlobal.push = webpackJsonpCallback
 var exports = {}
 /**
- * require.e异步加载hello代码块文件 hello.main.js
- * promise成功后会把 hello.main.js里面的代码定义合并到require.m对象上，也就是modules上
- * 调用require方法加载./src/hello.js模块，获取 模块的导出对象，进行打印
+ * require.e异步加载title代码块文件 title.main.js
+ * promise成功后会把 title.main.js里面的代码定义合并到require.m对象上，也就是modules上
+ * 调用require方法加载./src/title.js模块，获取 模块的导出对象，进行打印
  */
 require
   .e("src_title_js")
@@ -606,11 +606,34 @@ window["someName"].push([
 ### 核心方法
 
 - **modules 对象 ** key 是模块 ID，也就是模块相对于相前根目录的相对路径 值为对应加载模块的内容函数
+
 - **require 方法** 执行 modules 对象对应的模块函数 返回 modules.exports 对象
+
 - **require.d 方法** 通过 defineProperty 给 exports 上设置属性 get 获取
+
 - **require.o 方法** 对象自身属性中是否具有指定的属性
+
 - **require.r 方法** 标明该模块是 esModele 模块
+
 - **require.n 方法** 返回函数兼容性处理默认值 ，esModule 模块 是的返回 module["default"] 否则 commonjs 模块返回本身
+
+- **require.m 方法** 指向模块定义对象 equire.m = modules;
+
+- **require.p 方法** 获取要加载文件的绝对路径
+
+- **require.u 方法** 返回此代码块对应的文件名
+
+- **require.l 方法** 返回此代码块对应的文件名
+
+- **require.f.j 方法**
+
+- **require.e 方法** 异步加载代码块文件
+
+  - 返回 Promise.all([promises])
+  - promise 成功后会把 加载里面的代码定义合并到 require.m 对象上，也就是 modules 上
+  - 调用 require 方法加载对应模块，获取 模块的导出对象，进行打印
+
+  **installedChunks 对象** //存放加载的代码块的状态 //key 是代码块的名字 //0 表示已经加载完成了
 
 ### **兼容处理**
 
@@ -639,3 +662,24 @@ window["someName"].push([
   2. 调用 require 方法 加载模块 返回对应模块内容
 
   3. 兼容处理返回的默认值 调用 require.n
+
+### **异步加载**
+
+- 调用 require.e 异步加载代码，参数要加载的模块 ID
+
+  - 创建一个空的 promises 数组
+  - 调用 require.f.j(chunkId, promises）
+    - 定义一个 promise 和并且将该 chunkId 对应 promise 的 resolve,reject 放进数组
+    - 在全局对象 installedChunks 存取 key：chunkId ，value 为定义的数组
+    - 将该 promise 添加到 promises 上
+    - 通过 require.p + require.u(chunkId) 获取要动态加载的 script 的 url 地址
+    - 调用 require.l 同过 JSONP（动态创建 script，成功后删除）异步加载对接的文件
+    - 调用**webpackJsonpCallback**加载成功的回调，参数为 chunkIds 和 moreModules 对象
+      - installedChunks 取出对应 chunkId 的 resolves 方法存起来
+      - 把 installedChunks 中 chunkId 的值设置为 0 （表明该模块加载成功了）
+      - 遍历 moreModules 合并模块定义到 modules 去
+      - 依次取出 resolve 方法并执行
+  - 返回 Promise.all(promises)
+
+- 成功之后通过 then 方法加载调用 require 方法加载模块内容并返回下一个 then
+- 页面通过.then 方法拿到结果
