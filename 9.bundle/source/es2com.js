@@ -19,7 +19,7 @@ function require(moduleId) {
   return module.exports
 }
 /**
- * 判断是否exModule 是的化返回module["default"] 否则commonjs模块返回本身
+ * 判断是否exModule 是的返回module["default"] 否则commonjs模块返回本身
  * @param {*} module
  * @returns
  */

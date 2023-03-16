@@ -317,9 +317,9 @@ console.log(_title_0__.age)
 #### 2.4.1 index.js
 
 ```js
-import name, { age } from "./title";
-console.log(name);
-console.log(age);
+import name, { age } from "./title"
+console.log(name)
+console.log(age)
 ```
 
 #### 2.4.2 title.js
@@ -328,7 +328,7 @@ console.log(age);
 module.exports = {
   name: "title_name",
   age: "title_age",
-};
+}
 ```
 
 #### 2.4.3 bundle.js
@@ -412,6 +412,43 @@ var _title_0__ = require("./src/title.js")
 //取值
 console.log(_title_0__["default"])
 console.log(_title_0__.age)
-
 ```
 
+## 3 总结
+
+### 核心方法
+
+- **modules 对象 ** key 是模块 ID，也就是模块相对于相前根目录的相对路径 值为对应加载模块的内容函数
+- **require 方法** 执行 modules 对象对应的模块函数 返回 modules.exports 对象
+- **require.d 方法** 通过 defineProperty 给 exports 上设置属性 get 获取
+- **require.o 方法** 对象自身属性中是否具有指定的属性
+- **require.r 方法** 标明该模块是 esModele 模块
+- **require.n 方法** 返回函数兼容性处理默认值 ，esModule 模块 是的返回 module["default"] 否则 commonjs 模块返回本身
+
+### **兼容处理**
+
+- **common.js 加载 common.js**
+  1. 直接调用 require 方法 执行 modules 对象对应的函数返回 modules.exports 对象
+- **common.js 加载 ES6 modules**
+
+1.  直接调用 require 方法
+2.  执行 modules 对象对应的函数
+    1.  调用 require.r 方法 标明该模块为 esModule
+    2.  调用 require.d 方法 给 export 对象赋值
+3.  返回 modules.exports
+
+- ES6 modules 加载 ES6 modules
+
+  1. 模块入口 调用 require.r 标明是 esModule 模块
+  2. 调用 require 方法 加载模块
+     1. 调用 require.r 标明被加载的模块是 esModule
+     2. 调用 require.d 方法 给 export 对象赋值
+  3. 返回 加载的内容 modules.exports
+
+- ES6 modules 加载 common.js
+
+  1. 模块入口 调用 require.r 标明是 esModule 模块、
+
+  2. 调用 require 方法 加载模块 返回对应模块内容
+
+  3. 兼容处理返回的默认值 调用 require.n
