@@ -1,3 +1,6 @@
-import name, { age } from "./title"
-console.log(name)
-console.log(age)
+import("./title.js").then((module) => {
+  console.log(module.default)
+  import("./title.js").then((module) => {
+    console.log(module.default)
+  })
+})
