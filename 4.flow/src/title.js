@@ -1,3 +1,1 @@
-let age = require("./age")
-
-module.exports = "title" + age
+module.exports = "title"

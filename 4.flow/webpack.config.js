@@ -5,6 +5,7 @@ const DonePlugin = require("./plugins/done-plugin")
 module.exports = {
   mode: "development",
   devtool: false,
+  context: process.cwd,
   entry: {
     entry1: "./src/entry1.js",
     entry2: "./src/entry2.js",
@@ -20,10 +21,7 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        use: [
-          path.resolve(__dirname, "loaders/loader2.js"),
-          path.resolve(__dirname, "loaders/loader1.js"),
-        ],
+        use: [path.resolve(__dirname, "loaders/loader2.js"), path.resolve(__dirname, "loaders/loader1.js")],
       },
     ],
   },
