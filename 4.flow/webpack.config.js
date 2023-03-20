@@ -5,7 +5,7 @@ const DonePlugin = require("./plugins/done-plugin")
 module.exports = {
   mode: "development",
   devtool: false,
-  context: process.cwd,
+  context: process.cwd(),
   entry: {
     entry1: "./src/entry1.js",
     entry2: "./src/entry2.js",

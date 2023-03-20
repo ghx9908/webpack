@@ -35,10 +35,7 @@ class Compilation {
       //把此入口文件添加到文件依赖列表中
       this.fileDependencies.add(entryFilePath)
       //6.从入口文件出发,调用所有配置的Loader对模块进行编译
-      debugger
       let entryModule = this.buildModule(entryName, entryFilePath)
-      console.log("entryModule=>", entryModule)
-
       // this.modules.push(entryModule)
       // 8.根据入口和模块之间的依赖关系，组装成一个个包含多个模块的 Chunk
       let chunk = {
@@ -98,6 +95,7 @@ class Compilation {
     //创建一个模块ID就是相对于根目录的相对路径 dependencies就是此模块依赖的模块
     //name是模块所属的代码块的名称,如果一个模块属于多个代码块，那么name就是一个数组
     let module = { id: moduleId, dependencies: new Set(), names: [entryName] }
+    this.modules.push(module)
     let ast = parser.parse(transformedSourceCode, { sourceType: "module" })
     //Visitor是babel插件中的概念，此处没有
     traverse(ast, {
@@ -128,7 +126,7 @@ class Compilation {
           let depModuleId = "./" + path.posix.relative(baseDir, depModulePath)
           //修改语法树，把依赖的模块名换成模块ID
           node.arguments[0] = types.stringLiteral(depModuleId)
-          //把依赖的块ID和依赖的模块路径放置到当前模块的依赖数组中
+          //把依赖的模块ID和依赖的模块路径放置到当前模块的依赖数组中
           module.dependencies.add({ depModuleId, depModulePath })
         }
       },
@@ -172,7 +170,7 @@ function getSource(chunk) {
   (() => {
     var modules = {
       ${chunk.modules
-        .filter((module) => module.id !== chunk.entryModule._source)
+        .filter((module) => module.id !== chunk.entryModule.id)
         .map(
           (module) => `
           "${module.id}": module => {
