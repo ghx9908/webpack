@@ -1,8 +1,8 @@
 let Hook = require("./Hook")
 const HookCodeFactory = require("./HookCodeFactory")
 class AsyncParallelHookCodeFactory extends HookCodeFactory {
-  content() {
-    return this.callTapsParallel()
+  content(options) {
+    return this.callTapsParallel(options)
   }
 }
 let factory = new AsyncParallelHookCodeFactory()
