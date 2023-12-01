@@ -11,6 +11,9 @@ function resolvePlugin(config) {
     //resolveId函数用于解析id
     resolveId(id, importer) {
       //如果/开头表示是绝对路径
+      if (id.startsWith(config.root)) {
+        return { id };
+      }
       if (id.startsWith("/")) {
         return { id: path.resolve(config.root, id.slice(1)) };
       }

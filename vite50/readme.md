@@ -40,3 +40,6 @@ node_modules\.vite\deps就是依赖缓存存放目录
 3. 解析模块内容
 onResolve onLoad
 
+
+## vite 的入口是index
+是的

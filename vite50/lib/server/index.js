@@ -16,6 +16,7 @@ async function createServer() {
     async listen(port) {
       // 项目启动前 进行依赖的与构建
       // 1. 找到项目依赖的第三方模块
+      debugger
       await runOptimize(config, server)
       // 创建http服务器
       require("http")

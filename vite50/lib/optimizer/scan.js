@@ -18,7 +18,7 @@ async function scanImports(config) {
     // 输出格式
     format: "esm",
     // 输出文件
-    outfile: "dist/index.js",
+    outfile: "./dist/index.js",
     // 是否写入文件
     write: true,//真是的代码中write:false 不需要写入文件
     // 插件
