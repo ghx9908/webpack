@@ -16,7 +16,6 @@ async function createServer() {
     async listen(port) {
       // 项目启动前 进行依赖的与构建
       // 1. 找到项目依赖的第三方模块
-      debugger
       await runOptimize(config, server)
       // 创建http服务器
       require("http")
@@ -34,12 +33,14 @@ async function createServer() {
   return server;
 }
 
+// 异步函数，用于运行创建优化的依赖
 async function runOptimize(config, server) {
   // 运行创建优化的依赖
-  await createOptimizeDepsRun(config)
+  const optimizeDeps =  await createOptimizeDepsRun(config)
+  // 保存优化依赖的元数据
+  server._optimizeDepsMetadata = optimizeDeps.metadata
 }
 
 // 导出createServer函数
 
 exports.createServer = createServer;
-
