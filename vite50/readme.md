@@ -43,3 +43,23 @@ onResolve onLoad
 
 ## vite 的入口是index
 是的
+
+
+## 为什么要先编译发了叫这样可以减少http请求
+index.js  a  b c d 100.js
+请客户端index.js,再去请求 a b c d 100个请求
+服务器启动前
+index  a b c d  1000合并成一个文件
+后面请求的时候请求一个文件就可以
+
+
+## 编译的时候esbuild 会 tree shaking吗 
+没有
+
+
+## esbuild执行了几次？？
+
+至少是一次
+找依赖
+然后有多少第三方依赖就再执行多次少
+1+n次

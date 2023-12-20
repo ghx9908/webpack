@@ -42,7 +42,6 @@ async function createOptimizeDepsRun(config) {
       (key, value) => {
         if (key === "file" || key === "src") {
           //optimized里存的是绝对路径，此处写入硬盘的是相对于缓存目录的相对路径
-          console.log(depsCacheDir, value)
           return normalizePath(path.relative(depsCacheDir, value))
         }
         return value

@@ -1,8 +1,13 @@
 const { normalizePath } = require("../utils")
 const path = require("path")
 async function createPluginContainer({ plugins, root }) {
-  class PluginContext {}
+  class PluginContext {
+    async resolve(id, importer = path.join(root, "index.html")) {
+      return await container.resolveId(id, importer)
+    }
+  }
   const container = {
+     //里面有很多很多工具方法 emitFile写在插件容器里不合适
     async resolveId(id, importer) {
       // 创建一个插件上下文对象
       let ctx = new PluginContext()
@@ -24,6 +29,28 @@ async function createPluginContainer({ plugins, root }) {
       }
       // 返回处理后的 resolveId 对象
       return { id: normalizePath(resolveId) }
+    },
+
+    async load(id) {
+      const ctx = new PluginContext()
+      for (const plugin of plugins) {
+        if (!plugin.load) continue
+        const result = await plugin.load.call(ctx, id)
+        if (result !== null) {
+          return result
+        }
+      }
+      return null
+    },
+    async transform(code, id) {
+      for (const plugin of plugins) {
+        if (!plugin.transform) continue
+        const ctx = new PluginContext()
+        const result = await plugin.transform.call(ctx, code, id)
+        if (!result) continue
+        code = result.code || result
+      }
+      return { code }
     },
   }
   return container
