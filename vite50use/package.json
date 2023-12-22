@@ -1,0 +1,22 @@
+{
+  "name": "vite50use",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "vite",
+    "start": "vite50"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "vite": "^5.0.2"
+  },
+  "dependencies": {
+    "@vitejs/plugin-vue": "^4.5.2",
+    "hash-sum": "^2.0.0",
+    "vue": "^3.3.9"
+  }
+}
