@@ -9,5 +9,9 @@ module.exports = {
     },
  
   },
+  server:{
+    host: true,
+  },
   plugins:[vue()]
+
 }

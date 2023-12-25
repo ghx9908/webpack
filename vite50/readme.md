@@ -63,3 +63,13 @@ index  a b c d  1000合并成一个文件
 找依赖
 然后有多少第三方依赖就再执行多次少
 1+n次
+
+
+## HRM
+```json
+{"type":"update","updates":[{"type":"js-update","timestamp":1663766475066,"path":"/src/main.js","explicitImportRequired":false,"acceptedPath":"/src/renderModule.js"}]}
+```
+
+当一个模块发生变化的时候，会向上通知，如果有一个模块能够接收自己的改变，那么就到此为止
+让此接收的模块执行回调，处理更新
+如果一直向上通知，没有任何一个模块能接收，直接 刷新浏览器
