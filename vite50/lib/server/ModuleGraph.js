@@ -39,11 +39,21 @@ class ModuleGraph {
     const resolvedId = resolved.id || url;
     return [url, resolvedId];
   }
+  /**
+   * 更新模块信息
+   *
+   * @param {Object} mod - 模块对象
+   * @param {string[]} importedModules - 导入的依赖模块列表
+   * @param {string[]} acceptedModules - 接受的热更新模块列表
+   * @returns {Promise<void>} 异步操作完成的 Promise 对象
+   */
   async updateModuleInfo(mod, importedModules, acceptedModules) {
     for (const imported of importedModules) {
       const dep = await this.ensureEntryFromUrl(imported);
-      dep.importers.add(mod); //render.js importerts main.js
+      // 依赖的模块的导入方就是自己
+      dep.importers.add(mod); //render.js   importerts main.js
     }
+    // 维护接受个热更新依赖
     const deps = (mod.acceptedHmrDeps = new Set()); //main.js acceptedHmrDeps render.js
     for (const accepted of acceptedModules) {
       const dep = await this.ensureEntryFromUrl(accepted);
