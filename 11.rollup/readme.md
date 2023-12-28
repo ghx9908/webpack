@@ -39,3 +39,9 @@ https://www.babeljs.cn/docs/config-files
 
 1. rollup.js编译源码中的模块引用默认只支持 ES6+的模块方式import/export，不支持CommonJS的require()，
 2. 如需要使用CommonJS的模块，需要安装rollup-plugin-commonjs插件
+
+
+
+## 问答
+1. rollup中是不是没有loader的概念，所有东西都是通过插件来实现
+  是的

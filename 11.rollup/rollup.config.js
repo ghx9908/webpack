@@ -3,11 +3,13 @@ import resolve from '@rollup/plugin-node-resolve';// 解析node_modules中的模
 import commonjs from '@rollup/plugin-commonjs'; //将CommonJS模块转换为ES6
 import typescript from '@rollup/plugin-typescript';//支持ts语法
 import { terser } from 'rollup-plugin-terser';//压缩js代码
+import postcss from 'rollup-plugin-postcss';//支持css语法
+import serve from 'rollup-plugin-serve';//开发服务器
 /**
  * @type {import('rollup').RollupOptions}
  */
 export default {
-  input: "src/main.ts",
+  input: "src/main.js",
   output: {
     file: "dist/bundle.js",
     format: "cjs", //amd | umd | iife |es |cjs
@@ -25,6 +27,12 @@ export default {
     resolve(),//作用是可以加载node_modules里有的模块
     commonjs(),//可以支持commonjs语法
     typescript(),//支持ts语法
-    terser(),//压缩代码
+    // terser(),//压缩代码
+    postcss(),
+    serve({
+      open: true,//自动打开浏览器
+      port: 8080,//端口号
+      contentBase: './dist'//指定根目录
+    })
   ],
 }
