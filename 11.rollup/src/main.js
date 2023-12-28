@@ -1,2 +1,2 @@
-import {name,age} from './msg';
-console.log(name);
+import _ from 'lodash'
+console.log('_=>',_)

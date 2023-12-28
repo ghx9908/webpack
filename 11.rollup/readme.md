@@ -33,3 +33,9 @@ https://www.babeljs.cn/docs/config-files
 ## tree-shaking
 - Tree-shaking的本质是消除无用的js代码
 - rollup只处理函数和顶层的import/export变量
+
+
+## 使用第三方模块
+
+1. rollup.js编译源码中的模块引用默认只支持 ES6+的模块方式import/export，不支持CommonJS的require()，
+2. 如需要使用CommonJS的模块，需要安装rollup-plugin-commonjs插件
