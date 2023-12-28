@@ -5,8 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "rollup -c",
-    "dev": "rollup -c -w"
+    "build": "rollup --config rollup.config.build.js",
+    "dev": "rollup --config rollup.config.dev.js -w"
   },
   "keywords": [],
   "author": "",
