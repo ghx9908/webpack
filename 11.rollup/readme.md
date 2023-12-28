@@ -23,6 +23,13 @@ rollup和vite插件可复用，但是和esbuild插件不行不行
 - @babel/preset-env 是预设
 - @rollup/plugin-babel 是babel插件
 
+### .babelrc 和 babel.config.js 有什么区别？ 
+配置文件的格式不同，本质上没有区别
+https://www.babeljs.cn/docs/config-files
+
+### webpack中规定插件是类，rullup中的插件是普通函数吗，
+是的
+
 ## tree-shaking
 - Tree-shaking的本质是消除无用的js代码
 - rollup只处理函数和顶层的import/export变量
