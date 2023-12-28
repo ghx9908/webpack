@@ -8,9 +8,14 @@ export default {
   input: "src/main.js",
   output: {
     file: "dist/bundle.js",
-    format: "cjs", //amd | umd | iife |es |cjs
+    format: "iife", //amd | umd | iife |es |cjs
     name: "bundleName", //format为iife和umd时必须
+    globals: {
+      "lodash": "_",//lodash模块，在全局变量中为_
+      "jquery": "$",//jquery模块，在全局变量中为$
+    }
   },
+  external: ["lodash",'jquery'], //排除lodash模块
   plugins: [
     babel({
       exclude: "/node_modules/**",
