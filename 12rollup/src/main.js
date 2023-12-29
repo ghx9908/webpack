@@ -1,8 +1,10 @@
-import { name, name1, age } from './msg';
-function say() {
-  console.log('hello', name);
+import { name, age } from './msg';
+function say(profix) {
+  var address = '北京';
+  console.log('hello', name, address,profix);
+  function test(){
+  }
 }
-console.log('name=>',name)
-say();
+say('a');
 
 export default name;

@@ -7,7 +7,7 @@ class Bundle {
     //入口文件数据
     this.entryPath = path.resolve(options.entry.replace(/\.js$/, "") + ".js")
     //存放所有的模块
-    this.modules = {}
+    this.modules = new Map()
   }
   /**
    * 构建函数
@@ -26,7 +26,7 @@ class Bundle {
     fs.writeFileSync(filename, code) //写入文件系统
   }
   /**
-   * 获取模块
+   * 获取模块 创建模块实例
    *
    * @param importee 被引入的模块 ./msg.js
    * @param importer 引入别的模块的模块 main.js
@@ -35,7 +35,7 @@ class Bundle {
   fetchModule(importee, importer) {
     let route
     if (!importer) {
-      // 如果没有importer，将importee作为路由
+      // 如果没有importer，说明是入口文件
       route = importee
     } else {
       // 如果importee是绝对路径
@@ -51,15 +51,21 @@ class Bundle {
     // 如果路由存在
     if (route) {
       // 同步读取文件内容
-      let code = fs.readFileSync(route, "utf8")
-      //创建一个模块的实例
-      const module = new Module({
-        code, //模块的源代码
-        path: importee, //模块的路径
-        bundle: this, //Bundle实例
-      })
-      // 返回模块
-      return module
+
+      if(this.modules.has(route)){
+        return this.modules.get(route)
+      }else{
+        let code = fs.readFileSync(route, "utf8")
+        //创建一个模块的实例
+        const module = new Module({
+          code, //模块的源代码
+          path: importee, //模块的路径
+          bundle: this, //Bundle实例
+        })
+        this.modules.set(route,module) //将模块添加到Bundle的modules集合中
+        // 返回模块
+        return module
+      }
     }
   }
   /**

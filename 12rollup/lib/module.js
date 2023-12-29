@@ -34,10 +34,10 @@ class Module {
     this.definitions = {}
     // 给每个语句添加_module和_source属性
 
-    //存放变量修改语句
+    //存放变量修改语句 当前定义顶级变量的语句
     this.modifications = {}
     analyse(this.ast, this.code, this)
-  }
+  } 
   /**
    * 展开所有语句
    *
@@ -60,7 +60,7 @@ class Module {
   }
   /**
    * 展开单个语句
-   *
+   * 
    * @param statement 要展开的语句
    * @returns 返回扩展后的语句数组
    */
@@ -69,6 +69,7 @@ class Module {
     statement._included = true // 标识该语句已经添加到了结果里面了
     // 定义一个空数组result
     let result = []
+    // 找到此语句使用的变量,把该变量定义的语句也取出来放到result数组中
     //获取此语句依赖的变量
     let _dependsOn = Object.keys(statement._dependsOn)
 
@@ -108,7 +109,7 @@ class Module {
     if (hasOwnProperty(this.imports, name)) {
       //说明此变量不是模块内声明的，而是外部导入的,获取从哪个模块内导入了哪个变量
       const { source, importName } = this.imports[name]
-      //获取这个模块
+      //获取这个模块 source为相对于当前模块的路径 path为当前模块的路径
       const importModule = this.bundle.fetchModule(source, this.path)
       //从这个模块的导出变量量获得本地变量的名称
       const { localName } = importModule.exports[importName]

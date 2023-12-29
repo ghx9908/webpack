@@ -1,3 +1,3 @@
-export var name = 'ghx';
-export var name1 = 'ghx1';
+var name = 'ghx';
 export var age = 12;
+export {name}

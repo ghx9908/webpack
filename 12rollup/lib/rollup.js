@@ -7,7 +7,7 @@ const Bundle = require('./bundle')
  * @param filename 输出文件名
  */
 function rollup(entry, filename) {
-  // 创建一个新的 Bundle 实例
+  // 创建一个新的 Bundle 实例 有build方法
   const bundle = new Bundle({ entry });
 
   // 调用 Bundle 实例的 build 方法，并传入 filename 参数

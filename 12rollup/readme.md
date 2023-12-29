@@ -57,3 +57,6 @@ module.define(name);
 ```
 
 ## 问题
+### module和bundle的关系
+项目只有一个bundle
+bundle里会有很多的模块
