@@ -1,5 +1,8 @@
-import {address} from './msg'
-let name = 1
-let age = 12
-console.log('address=>',address)
-console.log('hello');
+import { name, name1, age } from './msg';
+function say() {
+  console.log('hello', name);
+}
+console.log('name=>',name)
+say();
+
+export default name;
