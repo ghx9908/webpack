@@ -13,6 +13,7 @@ function analyse(ast, code, module) {
       _source: { value: code.snip(statement.start, statement.end) }, //源码
       _defines: { value: {} }, //本顶级语句定义的变量
       _dependsOn: { value: {} }, //依赖的变量 { name: true}
+      _modifies: { value: {} },//本语句修改的变量
     })
     //import { name as name1, age } from './msg';
     if (statement.type === "ImportDeclaration") { // 语句中有import
@@ -51,6 +52,40 @@ function analyse(ast, code, module) {
   let currentScope = new Scope({ name: "当前模块全局作用域" })
   //创建作用域链,为了知道我在此模块中声明哪些变量，这些变量的声明节点是哪个 var name = 1;
   ast.body.forEach((statement) => {
+    function checkForReads(node) {
+      //如果此节点类型是一个标识符话
+      if (node.type === "Identifier") {
+        statement._dependsOn[node.name] = true
+      }
+    }
+
+    /**
+     * 给statement._modifies赋值和给module.modifications赋值 说明该变量被哪些语句修改了
+     * @param {*} node 当前语句
+     */
+    function checkForWrites(node) {
+      function addNode(node) {
+        const name = node.name
+        // 将statement._modifies[name]设置为true，表示该节点修改了name变量
+        statement._modifies[name] = true //statement._modifies.age = true;
+        if (!hasOwnProperty(module.modifications, name)) {
+          // 如果module.modifications中没有name变量，则创建一个空数组
+          module.modifications[name] = []
+        }
+        // 将statement添加到module.modifications[name]数组中
+        module.modifications[name].push(statement)
+      }
+      //赋值表达式
+      if (node.type === "AssignmentExpression") {
+        // 如果节点类型是AssignmentExpression，则将node.left作为参数调用addNode函数
+        addNode(node.left, true)
+        // 更新表达式
+      } else if (node.type === "UpdateExpression") {
+        // 如果节点类型是UpdateExpression，则将node.argument作为参数调用addNode函数
+        addNode(node.argument)
+      }
+    }
+
     function addToScope(name) {
       currentScope.add(name) //把name变量放入当前的作用域的变量数组中
       //如果当前作用于没有父亲，就相当于顶级作用域
@@ -65,9 +100,9 @@ function analyse(ast, code, module) {
     walk(statement, {
       enter(node) {
         //收集本节点上使用的变量
-        if (node.type === "Identifier") {
-          statement._dependsOn[node.name] = true
-        }
+        checkForReads(node)
+        //收集本节点上修改的变量
+        checkForWrites(node)
         // 创建作用域链
         let newScope
         switch (node.type) {

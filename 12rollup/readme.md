@@ -60,3 +60,16 @@ module.define(name);
 ### module和bundle的关系
 项目只有一个bundle
 bundle里会有很多的模块
+
+
+
+
+### 啥时候做的包含 expandStatement
+main.js
+import {name} from './msg.js';
+console.log(name);
+1.找到这个语句读到了或者说使用了哪个变量 name
+2.查找此变量name变量它的变量定义语句，添加最终输出的结果里
+3.判断name变量是不是外部导入的 
+4.如果是先获取外部的模块的定义msg.js
+5.找到在msg.js中定义 name变量的语句 var name = 'zhufeng';，放到输出结果 里
