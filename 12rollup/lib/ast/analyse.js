@@ -72,9 +72,9 @@ function analyse(ast, code, module) {
           // 如果module.modifications中没有name变量，则创建一个空数组
           module.modifications[name] = []
         }
-        // 将statement添加到module.modifications[name]数组中
+        // 存放此变量所有的修改语句
         module.modifications[name].push(statement)
-      }
+      } 
       //赋值表达式
       if (node.type === "AssignmentExpression") {
         // 如果节点类型是AssignmentExpression，则将node.left作为参数调用addNode函数
