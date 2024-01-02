@@ -40,6 +40,8 @@ class Module {
       name: ["statement1", "statement2"]
     }
     this.modifications = {}
+
+    this.canonicalNames = {}
     analyse(this.ast, this.code, this)
   }
   /**
@@ -139,6 +141,12 @@ class Module {
         }
       }
     }
+  }
+  rename(name, replacement) {
+    this.canonicalNames[name] = replacement
+  }
+  getCanonicalName(name) {
+    return this.canonicalNames[name] || name
   }
 }
 module.exports = Module
