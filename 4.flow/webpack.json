@@ -1,209 +1,126 @@
 {
-  "hash": "9943e9b86432cc5a1066",
-  "version": "5.76.2",
-  "time": 95,
-  "builtAt": 1679281646741,
-  "publicPath": "auto",
-  "outputPath": "D:\\Desktop\\个人\\珠峰架构\\前端工程化\\myWebpack\\4.flow\\dist",
-  "assetsByChunkName": {
-    "entry1": ["entry1.js"],
-    "entry2": ["entry2.js"]
-  },
-  "assets": [
+  "modules": [
     {
-      "type": "asset",
-      "name": "entry2.js",
-      "chunkNames": ["entry2"]
+      "id": "./src/entry1.js",
+      "dependencies": {},
+      "names": [
+        "entry1"
+      ],
+      "_source": "let title = require(\"./src/title.js\");\nconsole.log(\"entry1\", title);"
     },
     {
-      "type": "asset",
-      "name": "entry1.js",
-      "chunkNames": ["entry1"]
+      "id": "./src/title.js",
+      "dependencies": {},
+      "names": [
+        "entry1",
+        "entry2"
+      ],
+      "_source": "module.exports = \"title\";"
+    },
+    {
+      "id": "./src/title.js",
+      "dependencies": {},
+      "names": [
+        "entry1",
+        "entry2"
+      ],
+      "_source": "module.exports = \"title\";"
+    },
+    {
+      "id": "./src/entry2.js",
+      "dependencies": {},
+      "names": [
+        "entry2"
+      ],
+      "_source": "let title = require(\"./src/title.js\");\nconsole.log(\"entry2\", title);"
     }
   ],
   "chunks": [
     {
-      "names": ["entry1"],
-      "runtime": ["entry1"],
-      "files": ["entry1.js"],
-      "hash": "34cea5d7e2eef298a37e",
-      "origins": [
+      "name": "entry1",
+      "entryModule": {
+        "id": "./src/entry1.js",
+        "dependencies": {},
+        "names": [
+          "entry1"
+        ],
+        "_source": "let title = require(\"./src/title.js\");\nconsole.log(\"entry1\", title);"
+      },
+      "modules": [
         {
-          "loc": "entry1",
-          "request": "./src/entry1.js"
+          "id": "./src/entry1.js",
+          "dependencies": {},
+          "names": [
+            "entry1"
+          ],
+          "_source": "let title = require(\"./src/title.js\");\nconsole.log(\"entry1\", title);"
+        },
+        {
+          "id": "./src/title.js",
+          "dependencies": {},
+          "names": [
+            "entry1",
+            "entry2"
+          ],
+          "_source": "module.exports = \"title\";"
+        },
+        {
+          "id": "./src/title.js",
+          "dependencies": {},
+          "names": [
+            "entry1",
+            "entry2"
+          ],
+          "_source": "module.exports = \"title\";"
         }
       ]
     },
     {
-      "names": ["entry2"],
-      "runtime": ["entry2"],
-      "files": ["entry2.js"],
-      "hash": "31fd3b5044c4fd08c191",
-      "origins": [
+      "name": "entry2",
+      "entryModule": {
+        "id": "./src/entry2.js",
+        "dependencies": {},
+        "names": [
+          "entry2"
+        ],
+        "_source": "let title = require(\"./src/title.js\");\nconsole.log(\"entry2\", title);"
+      },
+      "modules": [
         {
-          "loc": "entry2",
-          "request": "./src/entry2.js"
+          "id": "./src/title.js",
+          "dependencies": {},
+          "names": [
+            "entry1",
+            "entry2"
+          ],
+          "_source": "module.exports = \"title\";"
+        },
+        {
+          "id": "./src/title.js",
+          "dependencies": {},
+          "names": [
+            "entry1",
+            "entry2"
+          ],
+          "_source": "module.exports = \"title\";"
+        },
+        {
+          "id": "./src/entry2.js",
+          "dependencies": {},
+          "names": [
+            "entry2"
+          ],
+          "_source": "let title = require(\"./src/title.js\");\nconsole.log(\"entry2\", title);"
         }
       ]
     }
   ],
-  "modules": [
-    {
-      "type": "module",
-      "moduleType": "javascript/auto",
-      "identifier": "D:\\Desktop\\个人\\珠峰架构\\前端工程化\\myWebpack\\4.flow\\loaders\\loader2.js!D:\\Desktop\\个人\\珠峰架构\\前端工程化\\myWebpack\\4.flow\\loaders\\loader1.js!D:\\Desktop\\个人\\珠峰架构\\前端工程化\\myWebpack\\4.flow\\src\\entry1.js",
-      "name": "./src/entry1.js",
-      "id": "./src/entry1.js",
-      "issuerId": null,
-      "chunks": ["entry1"],
-      "assets": [],
-      "reasons": [
-        {
-          "type": "entry",
-          "active": true,
-          "explanation": "",
-          "userRequest": "./src/entry1.js",
-          "loc": "entry1"
-        }
-      ]
-    },
-    {
-      "type": "module",
-      "moduleType": "javascript/auto",
-      "identifier": "D:\\Desktop\\个人\\珠峰架构\\前端工程化\\myWebpack\\4.flow\\loaders\\loader2.js!D:\\Desktop\\个人\\珠峰架构\\前端工程化\\myWebpack\\4.flow\\loaders\\loader1.js!D:\\Desktop\\个人\\珠峰架构\\前端工程化\\myWebpack\\4.flow\\src\\entry2.js",
-      "name": "./src/entry2.js",
-      "id": "./src/entry2.js",
-      "chunks": ["entry2"],
-      "assets": [],
-      "reasons": [
-        {
-          "type": "entry",
-          "active": true,
-          "userRequest": "./src/entry2.js",
-          "loc": "entry2"
-        }
-      ]
-    },
-    {
-      "type": "module",
-      "moduleType": "javascript/auto",
-      "identifier": "D:\\Desktop\\个人\\珠峰架构\\前端工程化\\myWebpack\\4.flow\\loaders\\loader2.js!D:\\Desktop\\个人\\珠峰架构\\前端工程化\\myWebpack\\4.flow\\loaders\\loader1.js!D:\\Desktop\\个人\\珠峰架构\\前端工程化\\myWebpack\\4.flow\\src\\title.js",
-      "name": "./src/title.js",
-      "issuerName": "./src/entry1.js",
-      "issuerPath": [
-        {
-          "identifier": "D:\\Desktop\\个人\\珠峰架构\\前端工程化\\myWebpack\\4.flow\\loaders\\loader2.js!D:\\Desktop\\个人\\珠峰架构\\前端工程化\\myWebpack\\4.flow\\loaders\\loader1.js!D:\\Desktop\\个人\\珠峰架构\\前端工程化\\myWebpack\\4.flow\\src\\entry1.js",
-          "name": "./src/entry1.js",
-          "id": "./src/entry1.js"
-        }
-      ],
-      "failed": false,
-      "errors": 0,
-      "warnings": 0,
-      "id": "./src/title.js",
-      "issuerId": "./src/entry1.js",
-      "chunks": ["entry1", "entry2"],
-      "assets": [],
-      "reasons": [
-        {
-          "module": "./src/entry1.js",
-          "type": "cjs require",
-          "userRequest": "./title",
-          "resolvedModuleId": "./src/entry1.js"
-        },
-        {
-          "module": "./src/entry2.js",
-          "type": "cjs require",
-          "userRequest": "./title",
-          "resolvedModuleId": "./src/entry2.js"
-        },
-        {
-          "module": "./src/title.js",
-          "type": "cjs self exports reference",
-          "resolvedModuleId": "./src/title.js"
-        }
-      ]
-    }
-  ],
-  "entrypoints": {
-    "entry1": {
-      "name": "entry1",
-      "chunks": ["entry1"],
-      "assets": [
-        {
-          "name": "entry1.js",
-          "size": 1633
-        }
-      ],
-      "filteredAssets": 0,
-      "assetsSize": 1633,
-      "auxiliaryAssets": [],
-      "filteredAuxiliaryAssets": 0,
-      "auxiliaryAssetsSize": 0,
-      "children": {},
-      "childAssets": {},
-      "isOverSizeLimit": false
-    },
-    "entry2": {
-      "name": "entry2",
-      "chunks": ["entry2"],
-      "assets": [
-        {
-          "name": "entry2.js",
-          "size": 1636
-        }
-      ],
-      "filteredAssets": 0,
-      "assetsSize": 1636,
-      "auxiliaryAssets": [],
-      "filteredAuxiliaryAssets": 0,
-      "auxiliaryAssetsSize": 0,
-      "children": {},
-      "childAssets": {},
-      "isOverSizeLimit": false
-    }
+  "assets": {
+    "entry1.js": "\n  (() => {\n    var modules = {\n      \n          \"./src/title.js\": module => {\n            module.exports = \"title\";\n          }\n        ,\n          \"./src/title.js\": module => {\n            module.exports = \"title\";\n          }\n        \n    };\n    var cache = {};\n    function require(moduleId) {\n      var cachedModule = cache[moduleId];\n      if (cachedModule !== undefined) {\n        return cachedModule.exports;\n      }\n      var module = cache[moduleId] = {\n        exports: {}\n      };\n      modules[moduleId](module, module.exports, require);\n      return module.exports;\n    }\n    var exports = {};\n    (() => {\n      let title = require(\"./src/title.js\");\nconsole.log(\"entry1\", title);\n    })();\n  })();\n  ",
+    "entry2.js": "\n  (() => {\n    var modules = {\n      \n          \"./src/title.js\": module => {\n            module.exports = \"title\";\n          }\n        ,\n          \"./src/title.js\": module => {\n            module.exports = \"title\";\n          }\n        \n    };\n    var cache = {};\n    function require(moduleId) {\n      var cachedModule = cache[moduleId];\n      if (cachedModule !== undefined) {\n        return cachedModule.exports;\n      }\n      var module = cache[moduleId] = {\n        exports: {}\n      };\n      modules[moduleId](module, module.exports, require);\n      return module.exports;\n    }\n    var exports = {};\n    (() => {\n      let title = require(\"./src/title.js\");\nconsole.log(\"entry2\", title);\n    })();\n  })();\n  "
   },
-  "namedChunkGroups": {
-    "entry1": {
-      "name": "entry1",
-      "chunks": ["entry1"],
-      "assets": [
-        {
-          "name": "entry1.js",
-          "size": 1633
-        }
-      ],
-      "filteredAssets": 0,
-      "assetsSize": 1633,
-      "auxiliaryAssets": [],
-      "filteredAuxiliaryAssets": 0,
-      "auxiliaryAssetsSize": 0,
-      "children": {},
-      "childAssets": {},
-      "isOverSizeLimit": false
-    },
-    "entry2": {
-      "name": "entry2",
-      "chunks": ["entry2"],
-      "assets": [
-        {
-          "name": "entry2.js",
-          "size": 1636
-        }
-      ],
-      "filteredAssets": 0,
-      "assetsSize": 1636,
-      "auxiliaryAssets": [],
-      "filteredAuxiliaryAssets": 0,
-      "auxiliaryAssetsSize": 0,
-      "children": {},
-      "childAssets": {},
-      "isOverSizeLimit": false
-    }
-  },
-  "errors": [],
-  "errorsCount": 0,
-  "warnings": [],
-  "warningsCount": 0,
-  "children": []
+  "files": [
+    "entry1.js",
+    "entry2.js"
+  ]
 }

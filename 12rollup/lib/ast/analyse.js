@@ -49,7 +49,7 @@ function analyse(ast, code, module) {
       }
     }
   })
-  //第2次循环创建作用域链
+  //第2次循环创建作用域链 收集本节点上使用的变量
   let currentScope = new Scope({ name: "当前模块全局作用域" })
   //创建作用域链,为了知道我在此模块中声明哪些变量，这些变量的声明节点是哪个 var name = 1;
   ast.body.forEach((statement) => {

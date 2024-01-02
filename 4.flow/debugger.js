@@ -1,5 +1,5 @@
-const webpack = require("webpack")
-// const webpack = require("./webpack2")
+// const webpack = require("webpack")
+const webpack = require("./webpack2")
 const fs = require("fs")
 const config = require("./webpack.config")
 debugger

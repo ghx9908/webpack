@@ -1,3 +1,5 @@
-import(/* webpackPreload: true */ `./video.js`).then((result) => {
-  console.log(result.default)
-})
+document.querySelector('#play').addEventListener('click',() => {
+  import('./video').then(result => {
+      console.log(result.default);
+  });
+});

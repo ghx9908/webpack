@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "debug":"node debugger.js"
   },
   "keywords": [],
   "author": "",

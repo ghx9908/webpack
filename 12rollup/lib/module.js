@@ -36,12 +36,12 @@ class Module {
     // 给每个语句添加_module和_source属性
 
     //存放变量修改语句 当前定义顶级变量的语句
-    {
-      name: ["statement1", "statement2"]
-    }
+    // {
+    //   name: ["statement1", "statement2"]
+    // }
     this.modifications = {}
 
-    this.canonicalNames = {}
+    this.canonicalNames = {} // 规范化名称
     analyse(this.ast, this.code, this)
   }
   /**
