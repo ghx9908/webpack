@@ -2,6 +2,7 @@ const MagicString = require("magic-string")
 const { hasOwnProperty } = require("./utils")
 const { parse } = require("acorn")
 let analyse = require("./ast/analyse")
+const SYSTEMS = ["console", "log"]
 class Module {
   /**
    * 构造函数
@@ -35,10 +36,12 @@ class Module {
     // 给每个语句添加_module和_source属性
 
     //存放变量修改语句 当前定义顶级变量的语句
-    { name:['statement1','statement2'] }
+    {
+      name: ["statement1", "statement2"]
+    }
     this.modifications = {}
     analyse(this.ast, this.code, this)
-  } 
+  }
   /**
    * 展开所有语句
    *
@@ -49,8 +52,10 @@ class Module {
     let allStatements = []
     // 遍历抽象语法树（AST）的语句
     this.ast.body.forEach((statement) => {
-      //导入的语句默认全部过滤掉
+      //导入的语句默认全部过滤掉 用到的时候才拿
       if (statement.type === "ImportDeclaration") return
+      //默认不包含所有的变量声明语句
+      if (statement.type === "VariableDeclaration") return
       // 扩展单个语句
       let statements = this.expandStatement(statement)
       // 将扩展后的语句添加到所有的语句中
@@ -61,7 +66,7 @@ class Module {
   }
   /**
    * 展开单个语句
-   * 
+   *
    * @param statement 要展开的语句
    * @returns 返回扩展后的语句数组
    */
@@ -119,11 +124,19 @@ class Module {
     } else {
       //如果是模块的变量的话
       let statement = this.definitions[name] //name
-      if (statement && !statement._included) {
-        //如果本地变量的话还需要继续展开
-        return this.expandStatement(statement)
+      if (statement) {
+        if (statement._included) {
+          return []
+        } else {
+          return this.expandStatement(statement)
+        }
       } else {
-        return []
+        if (SYSTEMS.includes(name)) {
+          return []
+        } else {
+          //如果找不到定义的变量就报错
+          throw new Error(`变量${name}既没有从外部导入，也没有在当前的模块声明`)
+        }
       }
     }
   }

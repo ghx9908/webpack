@@ -8,15 +8,16 @@ function analyse(ast, code, module) {
   //第1个循环，找出导入导出的变量
   ast.body.forEach((statement) => {
     Object.defineProperties(statement, {
-      _included: { value: false, writable: true },//表示这条语句默认不包括在输出结果里
+      _included: { value: false, writable: true }, //表示这条语句默认不包括在输出结果里
       _module: { value: module }, //所属模块
       _source: { value: code.snip(statement.start, statement.end) }, //源码
       _defines: { value: {} }, //本顶级语句定义的变量
       _dependsOn: { value: {} }, //依赖的变量 { name: true}
-      _modifies: { value: {} },//本语句修改的变量
+      _modifies: { value: {} }, //本语句修改的变量
     })
     //import { name as name1, age } from './msg';
-    if (statement.type === "ImportDeclaration") { // 语句中有import
+    if (statement.type === "ImportDeclaration") {
+      // 语句中有import
       let source = statement.source.value // ./msg 导入模块的相对路劲
       statement.specifiers.forEach((specifier) => {
         let importName = specifier.imported.name //导入的变量名
@@ -41,7 +42,7 @@ function analyse(ast, code, module) {
       if (specifiers && specifiers.length > 0) {
         specifiers.forEach((specifier) => {
           const localName = specifier.local.name //name
-          const exportName = specifier.exported.name 
+          const exportName = specifier.exported.name
           // exports.kk = {localName:'k'};
           module.exports[exportName] = { localName }
         })
@@ -74,7 +75,7 @@ function analyse(ast, code, module) {
         }
         // 存放此变量所有的修改语句
         module.modifications[name].push(statement)
-      } 
+      }
       //赋值表达式
       if (node.type === "AssignmentExpression") {
         // 如果节点类型是AssignmentExpression，则将node.left作为参数调用addNode函数
@@ -86,10 +87,11 @@ function analyse(ast, code, module) {
       }
     }
 
-    function addToScope(name) {
-      currentScope.add(name) //把name变量放入当前的作用域的变量数组中
-      //如果当前作用于没有父亲，就相当于顶级作用域
-      if (!currentScope.parent) {
+    function addToScope(name, isBlockDeclaration) {
+      currentScope.add(name, isBlockDeclaration) //把name变量放入当前的作用域的变量数组中
+      //如果没有父亲，相当 于就是根作用域或者 当前的作用域是一个块级作用域的话
+      if (!currentScope.parent || (currentScope.isBlock && !isBlockDeclaration)) {
+        //如果没有父作用域，说明这是一个顶级作用域
         //如果没有父作用域，说明这是一个顶级作用域
         // 表示此语句定义了一个顶级变量
         statement._defines[name] = true //在一级节点定义一个变量name _defines.say=true
@@ -110,12 +112,19 @@ function analyse(ast, code, module) {
           case "FunctionDeclaration":
             addToScope(node.id.name) // 把函数名放入当前作用域
             const names = node.params.map((param) => param.name)
-            newScope = new Scope({ name: node.id.name, parent: currentScope, names })
+            newScope = new Scope({ name: node.id.name, parent: currentScope, names, isBlock: false })
             break
           case "VariableDeclaration":
             node.declarations.forEach((declaration) => {
-              addToScope(declaration.id.name) //var
+              if (node.kind === "let" || node.kind === "const") {
+                addToScope(declaration.id.name, true) //这是是一个块级变量
+              } else {
+                addToScope(declaration.id.name) //var
+              }
             })
+          case "BlockStatement":
+            // 创建块级作用域
+            newScope = new Scope({ parent: currentScope, isBlock: true })
             break
           default:
             break
