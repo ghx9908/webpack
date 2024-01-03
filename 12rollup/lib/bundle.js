@@ -22,8 +22,7 @@ class Bundle {
     const entryModule = this.fetchModule(this.entryPath) //获取模块代码
     // 展开所有的语句
     this.statements = entryModule.expandAllStatements(true) //展开所有的语句
-    debugger
-    this.deconflict()
+    this.deconflict() //解决变量名冲突
 
     // 生成打包后的代码
     const { code } = this.generate() //生成打包后的代码
@@ -35,12 +34,13 @@ class Bundle {
    * 解决变量名冲突
    */
   deconflict() {
-    const defines = {} //定义的变量
-    const conflicts = {} //变量名冲突的变量
+    debugger
+    const defines = {} //所有变量对应的module  {age:[module1,module2],name:[module1]}
+    const conflicts = {} //变量名冲突的变量 {age:true,name:true}
     this.statements.forEach((statement) => {
-      Object.keys(statement._defines).forEach((name) => {
+      Object.keys(statement._defines).forEach((name) => {//所有语句里定义的变量
         if (hasOwnProperty(defines, name)) {
-          conflicts[name] = true
+          conflicts[name] = true// 冲突的变量名
         } else {
           defines[name] = [] //defines.age = [];
         }
@@ -113,10 +113,10 @@ class Bundle {
     // 遍历语句数组
     this.statements.forEach((statement) => {
       let replacements = {}
-      Object.keys(statement._dependsOn)//获取语句的依赖的变量
+      Object.keys(statement._dependsOn)//获取语句的依赖的变量和定义的变量
         .concat(Object.keys(statement._defines))
         .forEach((name) => {
-          const canonicalName = statement._module.getCanonicalName(name)
+          const canonicalName = statement._module.getCanonicalName(name)//获取新的变量名
           if (name !== canonicalName) replacements[name] = canonicalName
         })
 
@@ -125,6 +125,7 @@ class Bundle {
       if (statement.type === "ExportNamedDeclaration") {
         source.remove(statement.start, statement.declaration.start)
       }
+      // 替换语句的源代码中的变量名
       replaceIdentifiers(statement, source, replacements);
       // 向 magicString 中添加源代码
       magicString.addSource({

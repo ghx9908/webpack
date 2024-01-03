@@ -40,7 +40,7 @@ class Module {
     //   name: ["statement1", "statement2"]
     // }
     this.modifications = {}
-
+    // 重命名的变量
     this.canonicalNames = {} // 规范化名称
     analyse(this.ast, this.code, this)
   }

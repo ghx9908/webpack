@@ -18,7 +18,7 @@ function replaceIdentifiers(statement, source, replacements) {
     enter(node) {
       // 如果节点类型为 Identifier
       if (node.type === "Identifier") {
-        // 如果节点名称存在且替换规则中存在
+        // 如果节点名称存在且替换规则中存
         if (node.name && replacements[node.name]) {
           // 使用源代码覆盖节点起始位置到结束位置的代码，替换为替换规则中的内容
           source.overwrite(node.start, node.end, replacements[node.name])
