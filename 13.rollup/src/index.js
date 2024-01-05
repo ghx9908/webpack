@@ -1,1 +1,5 @@
-console.log('111=>',111)
+
+
+import('./msg.js').then(module=>{
+  console.log('module=>',module)
+})
